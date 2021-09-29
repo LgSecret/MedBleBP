@@ -68,3 +68,11 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
+local.properties
+.DS_Store
+*.iml
+MPChartLib/MPChartLib.iml
+zZMedBLELib/zZMedBLELib.iml
+zzmedOCR/zzmedOCR.iml
+zzmedOCR/production
+local.properties
