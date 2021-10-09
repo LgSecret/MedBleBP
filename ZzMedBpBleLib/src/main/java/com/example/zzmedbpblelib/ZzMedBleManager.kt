@@ -10,6 +10,7 @@ import com.example.zzmedbpblelib.callback.BleTypeEnum
 import com.example.zzmedbpblelib.callback.FailureEnum
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.util.Log
 import java.util.*
 import com.example.zzmedbpblelib.fastble.BleManager
@@ -20,8 +21,10 @@ import com.example.zzmedbpblelib.fastble.data.BleDevice
 import com.example.zzmedbpblelib.fastble.data.BleScanState
 import com.example.zzmedbpblelib.fastble.exception.BleException
 import com.example.zzmedbpblelib.fastble.scan.BleScanRuleConfig
+import com.example.zzmedbpblelib.utils.BleUtils
 import com.example.zzmedbpblelib.utils.DataUtils
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class ZzMedBleManager {
 
@@ -198,6 +201,24 @@ class ZzMedBleManager {
      */
     fun stopConnectBleAll(){
         BleManager.getInstance().disconnectAllDevice()
+    }
+
+
+    /**
+     * 解除蓝牙绑定
+     */
+    fun stopBinding(address: String): Boolean {
+        val bTAdapter = BluetoothAdapter.getDefaultAdapter()
+        val devices: Set<*> = bTAdapter.bondedDevices
+        val var3 = devices.iterator()
+        while (var3.hasNext()) {
+            val device = var3.next() as BluetoothDevice
+            if (TextUtils.isEmpty(device.address)) continue
+            if (!device.address.isNullOrEmpty() && device.address == address) {
+                return BleUtils.unBond(device)
+            }
+        }
+        return false
     }
 
     /**

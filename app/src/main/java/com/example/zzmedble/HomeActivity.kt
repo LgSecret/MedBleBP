@@ -16,6 +16,7 @@ import com.example.zzmedbpblelib.callback.BleCallBack
 import com.example.zzmedbpblelib.callback.FailureEnum
 
 import com.example.zzmedbpblelib.ZzMedBleManager
+import com.example.zzmedbpblelib.fastble.data.BleDevice
 import com.example.zzmedbpblelib.utils.BpDataResult
 import com.example.zzmedbpblelib.utils.GattUUID
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,12 +43,16 @@ class HomeActivity : AppCompatActivity(){
             btn.text = "连接中"
             onScan()
         }
-
+        address = getSpValue("ble",this@HomeActivity,"address","")
         //扫描
         btn.setOnClickListener {
-            address = getSpValue("ble",this@HomeActivity,"address","")
             onScan()
         }
+
+        dis_connect.setOnClickListener {
+          ZzMedBleManager.getInstance().stopBinding(address)
+        }
+
     }
 
     private fun onScan(){
