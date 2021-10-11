@@ -153,7 +153,6 @@ object  DataUtils {
                 + "pulseRateStr," + pulseRateStr
                 + "measurementStatusStr," + String.format(Locale.US, "%1$02x", flags) + "," + measurementStatusStr)
         Log.d("======", entry)
-        Toast.makeText(context, "获取测量数据+++++$entry", Toast.LENGTH_LONG).show()
 
         // Output log for data aggregation
         // AppLog format: ## For aggregation ## timestamp(date), timestamp(time), systolic, diastolic, meanAP, current date time

@@ -31,6 +31,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv" />
 
+    <Button
+        android:id="@+id/stopScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止扫描"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dis_connect" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"

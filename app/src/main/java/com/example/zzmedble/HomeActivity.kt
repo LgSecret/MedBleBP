@@ -53,6 +53,10 @@ class HomeActivity : AppCompatActivity(){
           ZzMedBleManager.getInstance().stopBinding(address)
         }
 
+        stopScan.setOnClickListener {
+            ZzMedBleManager.getInstance().stopScan()
+        }
+
     }
 
     private fun onScan(){
@@ -79,7 +83,12 @@ class HomeActivity : AppCompatActivity(){
                     }
 
                     override fun scanList(mDeviceList: List<BluetoothDevice>) {
-                        bleAdapter.setNewInstance(mDeviceList.toMutableList())
+                        val bleBeanList = mutableListOf<BleDataBean>()
+                        mDeviceList.forEach {
+                            bleBeanList.add(BleDataBean(it.name,it.address,it.name.substring(DeviceType.BLOOD_9200X.prefix.length)))
+                        }
+
+                        bleAdapter.setNewInstance(bleBeanList)
                     }
 
                     override fun onConnectSuccess(mDevice: BluetoothDevice,mAddress: String,mDeviceName:String) {
@@ -117,7 +126,12 @@ class HomeActivity : AppCompatActivity(){
                         }
 
                         override fun scanList(mDeviceList: List<BluetoothDevice>) {
-                            bleAdapter.setNewInstance(mDeviceList.toMutableList())
+                            val bleBeanList = mutableListOf<BleDataBean>()
+                            mDeviceList.forEach {
+                                bleBeanList.add(BleDataBean(it.name,it.address,it.name.substring(DeviceType.BLOOD_9200X.prefix.length)))
+                            }
+
+                            bleAdapter.setNewInstance(bleBeanList)
                         }
 
                         override fun onConnectSuccess(mDevice: BluetoothDevice,mAddress: String,mDeviceName:String) {

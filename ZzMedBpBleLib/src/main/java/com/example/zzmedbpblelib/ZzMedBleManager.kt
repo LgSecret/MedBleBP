@@ -305,6 +305,8 @@ class ZzMedBleManager {
                     Log.d("======", "获取数据成功${data}")
                     var callData =  DataUtils.setData(mContext,data)
                     callback.onDataResult(callData)
+                    //获取数据之后重新扫描
+                    startScan(callback)
                 }
             })
     }
