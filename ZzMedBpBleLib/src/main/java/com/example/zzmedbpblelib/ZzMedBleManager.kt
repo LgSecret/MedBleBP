@@ -41,9 +41,9 @@ class ZzMedBleManager {
 
     companion object{
         private var mApp: Application? = null
-
+        @JvmStatic
         fun getInstance() = ZzMedBleManager()
-
+        @JvmStatic
         fun init(app: Application?){
             if (mApp==null) {
                 mApp = app
@@ -134,9 +134,10 @@ class ZzMedBleManager {
                 if (deviceList.isNotEmpty()&&deviceList.size>0) {
                     BleManager.getInstance().allConnectedDevice.forEach {
                         if (it.mac!=null && it.mac == mAddress) {
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                delConnect(it.mac, callback)
-                            }, 500)
+                            delConnect(it.mac, callback)
+//                            Handler(Looper.getMainLooper()).postDelayed({
+//
+//                            }, 500)
                         }
                     }
                 }else {
@@ -255,9 +256,10 @@ class ZzMedBleManager {
                     }
 
                     bindBleDevice = bleDevice.mac
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        BleManagerNotify(bleDevice,callback)
-                    }, 500)
+                    BleManagerNotify(bleDevice,callback)
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//
+//                    }, 500)
                 }
 
                 override fun onDisConnected(
