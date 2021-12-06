@@ -300,6 +300,8 @@ class ZzMedBleManager {
                 override fun onIndicateFailure(exception: BleException?) {
                     Log.d("======", "获取数据失败$exception")
                     callback.onFailure(FailureEnum.DATA_FAIL,exception.toString())
+                    //获取数据之后重新扫描
+                    startScan(callback)
                 }
 
                 override fun onCharacteristicChanged(data: ByteArray) {
