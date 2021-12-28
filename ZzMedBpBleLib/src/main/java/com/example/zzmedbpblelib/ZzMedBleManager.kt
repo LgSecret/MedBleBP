@@ -35,6 +35,7 @@ class ZzMedBleManager {
     private lateinit var callback: BleCallBack
     private lateinit var mContext: Context
     private var mAddress: String = ""
+    private var isBindDevice = true
 
     //欧姆龙血压计对应的uuid
     private var mServiceUUID: String = "00001810-0000-1000-8000-00805f9b34fb"
@@ -121,6 +122,13 @@ class ZzMedBleManager {
         this.mChartUUID = charUUId
         return this@ZzMedBleManager
     }
+    /**
+     * 配置是否是绑定设备状态
+     */
+    fun isBond(isBondDec:Boolean):ZzMedBleManager{
+        this.isBindDevice = isBondDec
+        return this@ZzMedBleManager
+    }
 
     /**
      * 打开蓝牙 开始扫描
@@ -167,6 +175,7 @@ class ZzMedBleManager {
                 callback.scanList(scanList)
 
                 Log.d("======onScanning设备名称", "" + bleDevice.name)
+
                 if (mAddress.isNotEmpty() && bleDevice.mac != null && bleDevice.mac == mAddress) {
                     Log.d("======", "扫描成功")
                     bleDevice.device.createBond()
@@ -242,15 +251,16 @@ class ZzMedBleManager {
                 callback.onConnectSuccess(bleDevice.device, bleDevice.mac, bleDevice.name)
 
                 //在BleGattCallback中onConnectSuccess回调调用
-                if (gatt.getService(UUID.fromString(mServiceUUID)) == null) {
+                /*if (gatt.getService(UUID.fromString(mServiceUUID)) == null) {
                     //判断service是否为空
                     Handler(Looper.getMainLooper()).postDelayed({
                         gatt.discoverServices()
                     }, 500)
                     return
-                }
+                }*/
 
                 bindBleDevice = bleDevice.mac
+                if (isBindDevice)
                 BleManagerNotify(bleDevice, callback)
 //                    Handler(Looper.getMainLooper()).postDelayed({
 //
@@ -308,8 +318,10 @@ class ZzMedBleManager {
                     var callData = DataUtils.setData(mContext, data)
                     callback.onDataResult(callData)
                     //获取数据之后重新扫描
-                    stopScan()
-                    startScan(callback)
+                    if (callData.diastolic>0) {
+                        stopScan()
+                        startScan(callback)
+                    }
                 }
             })
     }
